@@ -23,7 +23,7 @@ describe('/GET comments', () => {
 });
 
 describe('/GET comment', () => {
-  it('it should GET one comment for song_id 1', (done) => {
+  xit('it should GET one comment for song_id 1', (done) => {
     chai.request(app)
         .get('/comments/1')
         .end((err, res) => {

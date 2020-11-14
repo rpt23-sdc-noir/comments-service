@@ -52,6 +52,23 @@ const getComment = (song_id) => {
   return Comment.find({ song_id })
 }
 
-module.exports.getComments = getComments;
-module.exports.getComment = getComment;
-module.exports.saveComment = saveComment;
+const lastComment = () => {
+  return Comment.find().sort({ comment_id:-1 }).limit(1)
+}
+
+const updateComment = (comment_id, content) => {
+  return Comment.updateOne({comment_id}, {content})
+}
+
+const deleteComment = (comment_id) => {
+  return Comment.deleteOne({comment_id})
+}
+
+module.exports = {
+  getComments,
+  getComment,
+  saveComment,
+  lastComment,
+  updateComment,
+  deleteComment
+}
