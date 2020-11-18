@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const expressStaticGzip = require('express-static-gzip');
-const db = require('../db/index');
+const db = require('../db');
 
 const port = 4000;
 

@@ -18,13 +18,13 @@ build:
   stage: build
   script:
     - npm install
-    - npm run build
     - npm run lint
+    - npm run build
 
 test:
   stage: test
   before_script:
-    - nohup node server/index.js
+    - nohup node server/index.js &
     - npm run seed
   script:
     - npx mocha
