@@ -37,6 +37,6 @@ for (let i = 1; i <= maxComments; i++) {
   if (i === maxComments) {
     setTimeout(() => {
       mongoose.disconnect();
-    }, 500);
+    }, 600);
   }
 }
