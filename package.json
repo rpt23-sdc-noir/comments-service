@@ -8,7 +8,7 @@
     "test": "mocha",
     "dev": "nodemon server/index.js",
     "server": "node server/index.js",
-    "build": "webpack --mode=production -d --watch",
+    "build": "webpack --mode=production",
     "start": "webpack-dev-server --open --mode=development",
     "lint": "eslint --fix . --ext .js"
   },
