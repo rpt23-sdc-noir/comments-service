@@ -50,14 +50,47 @@ describe('/GET comments', () => {
 });
 
 describe('/GET comment', () => {
-  it('it should GET some comment for song_id 1', (done) => {
+  after((done) => {
     chai
       .request(app)
-      .get('/comments/1')
+      .delete('/comment/0')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(err).to.be.null;
+        res.body.success.should.equal(true);
+        res.body.msg.n.should.equal(1);
+        done();
+      });
+  });
+
+  it('POST a test comment on song_id 0', (done) => {
+    chai
+      .request(app)
+      .post('/comment/0')
+      .send({
+        user_id: 0,
+        song_id: 0,
+        content: "Test",
+        time_stamp: 100,
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(err).to.be.null;
+        res.body.success.should.equal(true);
+        done();
+      });
+  });
+
+  it('it should GET some comment for song_id 0', (done) => {
+    chai
+      .request(app)
+      .get('/comments/0')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.data.should.be.a('array');
         res.body.data.length.should.be.greaterThan(0);
+        expect(res.body.data[0].content).to.be.a('string');
+        expect(res.body.data[0].content).to.equal('Test');
         done();
       });
   });
