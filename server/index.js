@@ -9,7 +9,6 @@ const port = 4000;
 
 const app = express();
 
-// app.use(express.static('./dist'));
 app.use(
   '/',
   expressStaticGzip('./dist', {
@@ -80,7 +79,6 @@ app.get('/:current', (req, res) => {
 });
 
 app.post('/comment', async (req, res) => {
-  console.log(req.body);
   try {
     const lastComment = await db.lastComment();
 
@@ -108,7 +106,6 @@ app.post('/comment', async (req, res) => {
 });
 
 app.put('/comment', async (req, res) => {
-  console.log(req.body);
   try {
     const updatedComment = await db.updateComment(
       req.body.comment_id,
@@ -133,7 +130,6 @@ app.put('/comment', async (req, res) => {
 });
 
 app.delete('/comment/:id', async (req, res) => {
-  console.log(req.body);
   try {
     const deletedComment = await db.deleteComment(JSON.parse(req.params.id));
     if (deletedComment.n === 0) {
