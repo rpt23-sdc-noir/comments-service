@@ -1,9 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const db = require("../db/index");
-const path = require("path");
-const expressStaticGzip = require("express-static-gzip");
+/* eslint-disable no-console */
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const expressStaticGzip = require('express-static-gzip');
+const db = require('../db');
 
 const port = 4000;
 
@@ -11,20 +11,20 @@ const app = express();
 
 // app.use(express.static('./dist'));
 app.use(
-  "/",
-  expressStaticGzip("./dist", {
+  '/',
+  expressStaticGzip('./dist', {
     enableBrotli: true,
-    orderPreference: ["br", "gz"],
-    setHeaders: function (res, path) {
-      res.setHeader("Cache-Control", "dist, max-age=31536000");
+    orderPreference: ['br', 'gz'],
+    setHeaders(res) {
+      res.setHeader('Cache-Control', 'dist, max-age=31536000');
     },
-  })
+  }),
 );
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/comments", async (req, res) => {
+app.get('/comments', async (req, res) => {
   try {
     const comments = await db.getComments();
     res.status(200).send({
@@ -41,7 +41,7 @@ app.get("/comments", async (req, res) => {
   }
 });
 
-app.get("/comments/:id", async (req, res) => {
+app.get('/comments/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -49,19 +49,19 @@ app.get("/comments/:id", async (req, res) => {
 
     if (!comment || id > 100) {
       return res.status(400).json({
-        success: false,
+        succes: false,
         msg: `no song with id ${id}`,
       });
     }
 
     if (comment.length === 0) {
       return res.status(400).json({
-        success: false,
+        succes: false,
         msg: `song ${id} doesn't have comments`,
       });
     }
 
-    res.status(200).send({
+    return res.status(200).send({
       success: true,
       data: comment,
     });
@@ -74,12 +74,12 @@ app.get("/comments/:id", async (req, res) => {
   }
 });
 
-app.get("/:current", (req, res) => {
-  console.log("hit");
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
+app.get('/:current', (req, res) => {
+  console.log('hit');
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-app.post("/comment", async (req, res) => {
+app.post('/comment', async (req, res) => {
   try {
     const lastComment = await db.lastComment();
 
@@ -106,7 +106,7 @@ app.post("/comment", async (req, res) => {
   }
 });
 
-app.put("/comment", async (req, res) => {
+app.put('/comment', async (req, res) => {
   try {
     const updatedComment = await db.updateComment(
       req.body.comment_id,
@@ -114,7 +114,7 @@ app.put("/comment", async (req, res) => {
     );
 
     if (updatedComment.n === 0) {
-      res.status(400).send("Bad request");
+      res.status(400).send('Bad request');
     } else {
       res.status(200).send({
         success: true,
@@ -130,15 +130,15 @@ app.put("/comment", async (req, res) => {
   }
 });
 
-app.delete("/comment/:id", async (req, res) => {
+app.delete('/comment/:id', async (req, res) => {
   try {
     const deletedComment = await db.deleteComment(JSON.parse(req.params.id));
     if (deletedComment.n === 0) {
-      res.status(400).send("Bad request");
+      res.status(400).send('Bad request');
     } else {
       res.status(200).send({
         success: true,
-        msg: updatedComment,
+        msg: deletedComment,
       });
     }
   } catch (error) {
