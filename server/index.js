@@ -67,8 +67,8 @@ app.get('/comments/:id', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      success: false,
+    return res.status(400).json({
+      succes: false,
       msg: error,
     });
   }
@@ -110,7 +110,7 @@ app.put('/comment', async (req, res) => {
   try {
     const updatedComment = await db.updateComment(
       req.body.comment_id,
-      req.body.content
+      req.body.content,
     );
 
     if (updatedComment.n === 0) {
