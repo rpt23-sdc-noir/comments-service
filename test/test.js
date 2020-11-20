@@ -70,7 +70,7 @@ describe('/GET comment', () => {
       .send({
         user_id: 0,
         song_id: 0,
-        content: "Test",
+        content: 'Test',
         time_stamp: 100,
       })
       .end((err, res) => {
