@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-/* eslint-disable import/no-extraneous-dependencies */
-=======
->>>>>>> a225bd2739d0382eb4cb1a59b3057b1bcc52a8ae
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
