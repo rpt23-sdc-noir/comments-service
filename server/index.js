@@ -48,7 +48,7 @@ app.get('/comments/:id', async (req, res) => {
 
     if (!comment || id > 100) {
       return res.status(400).json({
-        succes: false,
+        success: false,
         msg: `no song with id ${id}`,
       });
     }
@@ -67,7 +67,40 @@ app.get('/comments/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(400).json({
-      succes: false,
+      success: false,
+      msg: error,
+    });
+  }
+});
+
+app.get('/user/comment/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const comment = await db.getUserComment(id);
+
+    if (!comment || id > 100) {
+      return res.status(400).json({
+        success: false,
+        msg: `no comment with id ${id}`,
+      });
+    }
+
+    if (comment.length === 0) {
+      return res.status(400).json({
+        success: false,
+        msg: `comment ${id} doesn't have comments`,
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      data: comment,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({
+      success: false,
       msg: error,
     });
   }
@@ -84,6 +117,33 @@ app.post('/comment', async (req, res) => {
 
     const newComment = {
       comment_id: lastComment[0].comment_id + 1,
+      user_id: req.body.user_id,
+      song_id: req.body.song_id,
+      content: req.body.content,
+      time_stamp: req.body.time_stamp,
+    };
+
+    const storedComment = await db.saveComment(newComment);
+
+    res.status(201).send({
+      success: true,
+      data: storedComment,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      success: false,
+      msg: error,
+    });
+  }
+});
+
+app.post('/comment/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const newComment = {
+      comment_id: id,
       user_id: req.body.user_id,
       song_id: req.body.song_id,
       content: req.body.content,

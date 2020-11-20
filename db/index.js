@@ -53,6 +53,8 @@ const getComments = () => Comment.find().limit(1000);
 
 const getComment = (song_id) => Comment.find({ song_id });
 
+const getUserComment = (comment_id) => Comment.find({ comment_id });
+
 const lastComment = () => Comment.find().sort({ comment_id: -1 }).limit(1);
 
 const updateComment = (comment_id, content) => Comment.updateOne({ comment_id }, { content });
@@ -62,6 +64,7 @@ const deleteComment = (comment_id) => Comment.deleteOne({ comment_id });
 module.exports = {
   getComments,
   getComment,
+  getUserComment,
   saveComment,
   lastComment,
   updateComment,
