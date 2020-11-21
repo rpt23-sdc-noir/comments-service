@@ -26,6 +26,7 @@ test:
   before_script:
     - nohup node server/index.js &
     - npm run seed
+    - npm run import-mongo
   script:
     - npx mocha
   after_script:
