@@ -26,7 +26,9 @@ test:
   before_script:
     - nohup node server/index.js &
     - npm run seed-test
-    - ./sh ./seed/mongoimport.sh
+    - apk update
+    - apk add bash
+    - ./seed/mongoimport.sh
   script:
     - npx mocha
   after_script:
