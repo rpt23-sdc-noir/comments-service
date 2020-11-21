@@ -1,10 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 const mongoose = require('mongoose');
 const { LoremIpsum } = require('lorem-ipsum');
-const commentDb = require('./db/index');
+const { createWriteStream } = require('fs');
+const { Transform } = require('json2csv');
+const { Readable } = require('stream');
 
-const maxComments = Math.floor(Math.random() * 200) + 37;
+const maxComments = process.env.COMMENT_COUNT;
 const maxSongLength = 480; // in seconds, how long song is
 
 const lorem = new LoremIpsum({
@@ -20,10 +23,8 @@ const randoSongId = () => Math.floor(Math.random() * 100) + 1;
 
 const randoTimeStamp = (maxTime) => Math.floor(Math.random() * maxTime);
 
-commentDb
-  .dropDB()
-  .then(() => console.log('DBdropped'))
-  .catch((error) => console.error(error.message));
+const input = new Readable({ objectMode: true });
+input._read = () => {};
 
 for (let i = 1; i <= maxComments; i++) {
   const tempComment = {
@@ -33,15 +34,17 @@ for (let i = 1; i <= maxComments; i++) {
     content: lorem.generateSentences(1),
     time_stamp: randoTimeStamp(maxSongLength),
   };
-
-  commentDb
-    .saveComment(tempComment)
-    .then((comment) => console.log(`comment '${comment.content}' added`))
-    .catch((error) => console.error(error.message));
-
-  if (i === maxComments) {
-    setTimeout(() => {
-      mongoose.disconnect();
-    }, 600);
-  }
+  input.push(tempComment);
 }
+input.push(null);
+const output = createWriteStream('./seed/comments.csv', { encoding: 'utf8' });
+
+const opts = {};
+const transformOpts = { objectMode: true };
+
+const json2csv = new Transform(opts, transformOpts);
+input.pipe(json2csv).pipe(output);
+output.on('finish', () => {
+  console.log('seeded');
+  mongoose.disconnect();
+});

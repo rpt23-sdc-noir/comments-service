@@ -42,8 +42,6 @@ describe('/GET comments', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.data.should.be.a('array');
-        res.body.data.length.should.be.gt(36);
-        res.body.data.length.should.be.below(1000);
         done();
       });
   });
