@@ -20,14 +20,14 @@ build:
     - npm install
     - npm run lint
     - npm run build
+    - apk update
+    - apk add bash
 
 test:
   stage: test
   before_script:
     - nohup node server/index.js &
     - npm run seed-test
-    - apk update
-    - apk add bash
     - ./seed/mongoimport.sh
   script:
     - npx mocha
