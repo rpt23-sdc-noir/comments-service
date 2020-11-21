@@ -20,6 +20,11 @@ const randoSongId = () => Math.floor(Math.random() * 100) + 1;
 
 const randoTimeStamp = (maxTime) => Math.floor(Math.random() * maxTime);
 
+commentDb
+  .dropDB()
+  .then(() => console.log('DBdropped'))
+  .catch((error) => console.error(error.message));
+
 for (let i = 1; i <= maxComments; i++) {
   const tempComment = {
     comment_id: i,

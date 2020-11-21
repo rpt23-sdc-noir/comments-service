@@ -61,6 +61,8 @@ const updateComment = (comment_id, content) => Comment.updateOne({ comment_id },
 
 const deleteComment = (comment_id) => Comment.deleteOne({ comment_id });
 
+const dropDB = () => db.dropDatabase();
+
 module.exports = {
   getComments,
   getComment,
@@ -69,4 +71,5 @@ module.exports = {
   lastComment,
   updateComment,
   deleteComment,
+  dropDB,
 };
