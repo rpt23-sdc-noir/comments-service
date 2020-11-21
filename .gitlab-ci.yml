@@ -23,7 +23,7 @@ build:
     - apk update
     - apk upgrade
     - apk add bash
-    - echo 'Testing bash'
+    - echo 'Hello World'
 
 test:
   stage: test
