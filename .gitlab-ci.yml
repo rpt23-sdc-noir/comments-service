@@ -30,6 +30,7 @@ test:
     - echo 'Hello World'
     - nohup node server/index.js &
     - npm run seed-test
+    - chmod -x ./seed/mongoimport.sh
     - ./seed/mongoimport.sh
   script:
     - npx mocha
