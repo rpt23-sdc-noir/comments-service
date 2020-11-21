@@ -42,8 +42,6 @@ describe('/GET comments', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.data.should.be.a('array');
-        res.body.data.length.should.be.gt(36);
-        res.body.data.length.should.be.below(1000);
         done();
       });
   });
@@ -66,11 +64,12 @@ describe('/GET comment', () => {
   it('POST a test comment on song_id 0', (done) => {
     chai
       .request(app)
-      .post('/comment/0')
+      .post('/comment')
+      .query({ id: 0 })
       .send({
         user_id: 0,
         song_id: 0,
-        content: "Test",
+        content: 'Test',
         time_stamp: 100,
       })
       .end((err, res) => {
@@ -95,10 +94,10 @@ describe('/GET comment', () => {
       });
   });
 
-  it('it should not GET any comments for a non-existant song_id 101', (done) => {
+  it('it should not GET any comments for a non-existant song_id -1', (done) => {
     chai
       .request(app)
-      .get('/comments/101')
+      .get('/comments/-1')
       .end((err, res) => {
         res.should.have.status(400);
         res.body.msg.should.be.a('string');
@@ -111,7 +110,8 @@ describe('Test CRUD Operations for comments', () => {
   after((done) => {
     chai
       .request(app)
-      .post('/comment/1')
+      .post('/comment')
+      .query({ id: 1 })
       .send({
         user_id: userIdHolder,
         song_id: songIdHolder,
@@ -129,9 +129,8 @@ describe('Test CRUD Operations for comments', () => {
   it('PUT should be able to edit an existing comment', (done) => {
     chai
       .request(app)
-      .put('/comment')
+      .put('/comment/1')
       .send({
-        comment_id: 1,
         content: 'Test PUT operation',
       })
       .end((err, res) => {
