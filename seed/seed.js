@@ -47,6 +47,7 @@ const json2csv = new Transform(opts, transformOpts);
 input.pipe(json2csv).pipe(output);
 output.on('finish', () => {
   console.log('seeded');
+  // eslint-disable-next-line max-len
   // shell.exec('mongoimport --type csv -d fec-soundcloud-comments -c comments --headerline --drop /Users/abhogle/Documents/RPT23/SDC/comments-service/seed/comments.csv');
   mongoose.disconnect();
 });
