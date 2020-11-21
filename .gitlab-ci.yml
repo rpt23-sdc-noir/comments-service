@@ -20,14 +20,14 @@ build:
     - npm install
     - npm run lint
     - npm run build
-    - apk update
-    - apk upgrade
-    - apk add bash
-    - echo 'Hello World'
 
 test:
   stage: test
   before_script:
+    - apk update
+    - apk upgrade
+    - apk add bash
+    - echo 'Hello World'
     - nohup node server/index.js &
     - npm run seed-test
     - ./seed/mongoimport.sh
