@@ -6,7 +6,7 @@ const { LoremIpsum } = require('lorem-ipsum');
 const { createWriteStream } = require('fs');
 const { Transform } = require('json2csv');
 const { Readable } = require('stream');
-const shell = require('shelljs');
+// const shell = require('shelljs');
 
 const maxComments = process.env.COMMENT_COUNT;
 const maxSongLength = 480; // in seconds, how long song is
