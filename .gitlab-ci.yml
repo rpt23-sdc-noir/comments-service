@@ -1,4 +1,4 @@
-image: node:alpine
+image: node:latest
 
 cache:
   paths:
@@ -24,14 +24,9 @@ build:
 test:
   stage: test
   before_script:
-    - apk update
-    - apk upgrade
-    - apk add bash
-    - echo 'Hello World'
     - nohup node server/index.js &
-    - npm run seed-test
-    - chmod -x ./seed/mongoimport.sh
-    - ./seed/mongoimport.sh
+    - npm run generate-data-test
+    - npm run seed-mongo
   script:
     - npx mocha
   after_script:

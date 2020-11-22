@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const { LoremIpsum } = require('lorem-ipsum');
 const { createWriteStream } = require('fs');
 const { Transform } = require('json2csv');
@@ -49,5 +49,5 @@ output.on('finish', () => {
   console.log('seeded');
   // eslint-disable-next-line max-len
   // shell.exec('mongoimport --type csv -d fec-soundcloud-comments -c comments --headerline --drop /Users/abhogle/Documents/RPT23/SDC/comments-service/seed/comments.csv');
-  mongoose.disconnect();
+  // mongoose.disconnect();
 });

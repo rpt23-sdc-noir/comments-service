@@ -63,6 +63,16 @@ const deleteComment = (comment_id) => Comment.deleteOne({ comment_id });
 
 const dropDB = () => db.dropDatabase();
 
+// eslint-disable-next-line consistent-return
+const insertMany = (comments) => Comment.insertMany(comments, (err, docs) => {
+  if (err) {
+    console.log(err);
+    return err;
+  }
+  console.log(JSON.stringify(docs.length));
+  return (docs.length);
+});
+
 module.exports = {
   getComments,
   getComment,
@@ -72,4 +82,5 @@ module.exports = {
   updateComment,
   deleteComment,
   dropDB,
+  insertMany,
 };
