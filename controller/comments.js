@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-const db = require('../db/index');
+// const db = require('../db/index');
+const pgdb = require('../db/pg/index');
 
 const allComments = async (req, res) => {
   try {
-    const comments = await db.getComments();
+    const comments = await pgdb.getComments();
     res.status(200).send({
       success: true,
       count: comments.length,
@@ -25,7 +26,7 @@ const findSong = async (req, res) => {
 
     let comment;
     if (Number.isInteger(Number(id))) {
-      comment = await db.getComment(id);
+      comment = await pgdb.getComment(id);
     }
 
     if (!comment) {
@@ -61,7 +62,7 @@ const findComment = async (req, res) => {
 
     let comment;
     if (Number.isInteger(Number(id))) {
-      comment = await db.getUserComment(id);
+      comment = await pgdb.getUserComment(id);
     }
 
     if (!comment) {
@@ -97,7 +98,7 @@ const addComment = async (req, res) => {
     if (req.query.id) {
       comment_id = req.query.id;
     } else {
-      const lastComment = await db.lastComment();
+      const lastComment = await pgdb.lastComment();
       comment_id = lastComment[0].comment_id + 1;
     }
 
@@ -109,7 +110,7 @@ const addComment = async (req, res) => {
       time_stamp: req.body.time_stamp,
     };
 
-    const storedComment = await db.saveComment(newComment);
+    const storedComment = await pgdb.saveComment(newComment);
 
     return res.status(201).send({
       success: true,
@@ -126,12 +127,12 @@ const addComment = async (req, res) => {
 
 const updateComment = async (req, res) => {
   try {
-    const updatedComment = await db.updateComment(
+    const updatedComment = await pgdb.updateComment(
       req.params.id,
       req.body.content,
     );
 
-    if (updatedComment.n === 0) {
+    if (updatedComment === 0) {
       return res.status(400).send('Bad request');
     }
     return res.status(200).send({
@@ -149,7 +150,7 @@ const updateComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   try {
-    const deletedComment = await db.deleteComment(JSON.parse(req.params.id));
+    const deletedComment = await pgdb.deleteComment(Number(req.params.id));
     if (deletedComment.n === 0) {
       res.status(400).send('Bad request');
     } else {

@@ -56,7 +56,7 @@ describe('/GET comment', () => {
         expect(res).to.have.status(200);
         expect(err).to.be.null;
         res.body.success.should.equal(true);
-        res.body.msg.n.should.equal(1);
+        res.body.msg.should.equal(1);
         done();
       });
   });
@@ -137,7 +137,7 @@ describe('Test CRUD Operations for comments', () => {
         expect(res).to.have.status(200);
         expect(err).to.be.null;
         res.body.success.should.equal(true);
-        res.body.msg.n.should.equal(1);
+        res.body.msg.should.equal(1);
         done();
       });
   });
@@ -163,7 +163,7 @@ describe('Test CRUD Operations for comments', () => {
         expect(res).to.have.status(200);
         expect(err).to.be.null;
         res.body.success.should.equal(true);
-        res.body.msg.n.should.equal(1);
+        res.body.msg.should.equal(1);
         done();
       });
   });
@@ -207,7 +207,7 @@ describe('Test CRUD Operations for comments', () => {
         expect(res).to.have.status(200);
         expect(err).to.be.null;
         res.body.success.should.equal(true);
-        res.body.msg.n.should.equal(1);
+        res.body.msg.should.equal(1);
         done();
       });
   });
