@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-console */
 const db = require('../db');
 
@@ -22,9 +23,12 @@ const findSong = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const comment = await db.getComment(id);
+    let comment;
+    if (Number.isInteger(Number(id))) {
+      comment = await db.getComment(id);
+    }
 
-    if (!comment || id > 100) {
+    if (!comment) {
       return res.status(400).json({
         success: false,
         msg: `no song with id ${id}`,
@@ -55,9 +59,12 @@ const findComment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const comment = await db.getUserComment(id);
+    let comment;
+    if (Number.isInteger(Number(id))) {
+      comment = await db.getUserComment(id);
+    }
 
-    if (!comment || id > 100) {
+    if (!comment) {
       return res.status(400).json({
         success: false,
         msg: `no comment with id ${id}`,
@@ -86,10 +93,16 @@ const findComment = async (req, res) => {
 
 const addComment = async (req, res) => {
   try {
-    const lastComment = await db.lastComment();
+    let comment_id;
+    if (req.query.id) {
+      comment_id = req.query.id;
+    } else {
+      const lastComment = await db.lastComment();
+      comment_id = lastComment[0].comment_id + 1;
+    }
 
     const newComment = {
-      comment_id: lastComment[0].comment_id + 1,
+      comment_id,
       user_id: req.body.user_id,
       song_id: req.body.song_id,
       content: req.body.content,
@@ -98,40 +111,13 @@ const addComment = async (req, res) => {
 
     const storedComment = await db.saveComment(newComment);
 
-    res.status(201).send({
+    return res.status(201).send({
       success: true,
       data: storedComment,
     });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
-      success: false,
-      msg: error,
-    });
-  }
-};
-
-const addSpecificComment = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const newComment = {
-      comment_id: id,
-      user_id: req.body.user_id,
-      song_id: req.body.song_id,
-      content: req.body.content,
-      time_stamp: req.body.time_stamp,
-    };
-
-    const storedComment = await db.saveComment(newComment);
-
-    res.status(201).send({
-      success: true,
-      data: storedComment,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       msg: error,
     });
@@ -141,21 +127,20 @@ const addSpecificComment = async (req, res) => {
 const updateComment = async (req, res) => {
   try {
     const updatedComment = await db.updateComment(
-      req.body.comment_id,
+      req.params.id,
       req.body.content,
     );
 
     if (updatedComment.n === 0) {
-      res.status(400).send('Bad request');
-    } else {
-      res.status(200).send({
-        success: true,
-        msg: updatedComment,
-      });
+      return res.status(400).send('Bad request');
     }
+    return res.status(200).send({
+      success: true,
+      msg: updatedComment,
+    });
   } catch (error) {
     console.error(error);
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       msg: error,
     });
@@ -187,7 +172,6 @@ module.exports = {
   findSong,
   findComment,
   addComment,
-  addSpecificComment,
   updateComment,
   deleteComment,
 };
