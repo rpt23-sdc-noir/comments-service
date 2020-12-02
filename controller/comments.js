@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
-const db = require('../db');
+const db = require('../db/index');
 
 const allComments = async (req, res) => {
   try {
