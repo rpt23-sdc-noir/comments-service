@@ -2,3 +2,7 @@
 node_modules/
 dist/
 nohup.out
+seed/comments.csv
+seed/mongoimport.sh
+builds/
+cache/

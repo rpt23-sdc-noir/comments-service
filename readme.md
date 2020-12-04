@@ -1,6 +1,6 @@
-# Hi FEC squad!
+# Hi SDC squad!
 
-## run the following commands to get crackin
+## Run the following commands to get crackin
 ## PORT is 4000
 
 ### To seed the data
