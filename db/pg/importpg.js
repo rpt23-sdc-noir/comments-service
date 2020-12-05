@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const pool = require('./pg');
 
-pool.query("COPY comments FROM '/Users/abhogle/Documents/RPT23/SDC/comments-service/seed/comments.csv' DELIMITER ',' CSV HEADER;")
+pool.query("COPY comments FROM '/Users/abhogle/Documents/RPT23/SDC/comments-service/db/pg/comments.csv' DELIMITER ',' CSV HEADER;")
   .then((result) => {
     console.log(result.rowCount, 'records seeded.');
     pool.end();

@@ -5,10 +5,13 @@ cache:
     - node_modules/
 
 services:
-  - mongo:latest
+  - postgres:latest
 
 variables:
-  MONGO_URI: 'mongodb://mongo/fec-soundcloud-comments'
+  POSTGRES_DB: sdc_comments
+  POSTGRES_USER: runner
+  POSTGRES_PASSWORD: ""
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
   - build
@@ -25,8 +28,8 @@ test:
   stage: test
   before_script:
     - nohup node server/index.js &
-    - npm run seed
   script:
-    - npx mocha
+    - npm run seed
+    # - npx mocha
   after_script:
     - pkill node

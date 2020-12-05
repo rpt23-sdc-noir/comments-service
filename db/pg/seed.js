@@ -38,7 +38,7 @@ for (let i = 1; i <= maxComments; i++) {
   input.push(tempComment);
 }
 input.push(null);
-const output = createWriteStream('./seed/comments.csv', { encoding: 'utf8' });
+const output = createWriteStream('./db/pg/comments.csv', { encoding: 'utf8' });
 
 const opts = {};
 const transformOpts = { objectMode: true };
