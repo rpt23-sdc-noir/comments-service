@@ -8,6 +8,7 @@
     "generate-data-test": "COMMENT_COUNT=1000 node db/pg/seed.js",
     "import-mongo": "mongoimport --type csv -d fec-soundcloud-comments -c comments --headerline --drop /Users/abhogle/Documents/RPT23/SDC/comments-service/seed/comments.csv",
     "seed-mongo-test": "node seed/mongoimport.js",
+    "createPGDB": "psql postgres < db/pg/database.sql",
     "seed-pg-test": "node db/pg/importpg.js",
     "test": "mocha",
     "dev": "nodemon server/index.js",

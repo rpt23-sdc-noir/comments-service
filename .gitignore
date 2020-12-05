@@ -2,7 +2,6 @@
 node_modules/
 dist/
 nohup.out
-seed/
 builds/
 cache/
 db/pg/comments.csv

@@ -11,25 +11,29 @@ variables:
   POSTGRES_DB: sdc_comments
   POSTGRES_USER: runner
   POSTGRES_PASSWORD: ""
+  POSTGRES_HOST: postgres
   POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
   - build
   - test
-
 build:
   stage: build
+  before_script:
+    - export PGPASSWORD=$POSTGRES_PASSWORD
+    - psql -h "postgres" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
   script:
     - npm install
     - npm run lint
     - npm run build
+    - npm run createPGDB
 
 test:
   stage: test
   before_script:
     - nohup node server/index.js &
-  script:
     - npm run seed
-    # - npx mocha
+  script:
+    - npx mocha
   after_script:
     - pkill node
