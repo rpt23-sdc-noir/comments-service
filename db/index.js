@@ -18,10 +18,6 @@ db.once('open', () => {
   console.log('mongodb connected!');
 });
 
-// db.dropCollection("comments", () =>  {
-//   console.log("comments collection dropped");
-// });
-
 const commentSchema = new mongoose.Schema({
   comment_id: {
     type: Number,
