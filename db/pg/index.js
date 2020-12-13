@@ -8,7 +8,7 @@ const saveComment = (comment) => pool.query(`INSERT INTO comments VALUES (${comm
 const getComments = () => pool.query('SELECT * FROM comments LIMIT 1000;')
   .then((result) => result.rows);
 
-const getComment = (song_id) => pool.query(`SELECT * FROM comments WHERE song_id = ${song_id} LIMIT 1000;`)
+const getComment = (song_id) => pool.query(`SELECT * FROM comments WHERE song_id = ${song_id} LIMIT 10;`)
   .then((result) => result.rows);
 
 const getUserComment = (comment_id) => pool.query(`SELECT * FROM comments WHERE comment_id = ${comment_id};`)

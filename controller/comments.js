@@ -93,6 +93,11 @@ const findComment = async (req, res) => {
 };
 
 const addComment = async (req, res) => {
+  // console.log(
+  //   req.body,
+  //   req.query,
+  //   req.param,
+  // );
   try {
     let comment_id;
     if (req.query.id) {
@@ -126,10 +131,6 @@ const addComment = async (req, res) => {
 };
 
 const updateComment = async (req, res) => {
-  console.log(
-    req.params.id,
-    req.body.content,
-  );
   try {
     const updatedComment = await pgdb.updateComment(
       req.params.id,

@@ -5,7 +5,7 @@ const path = require('path');
 const expressStaticGzip = require('express-static-gzip');
 // const db = require('../db');
 const router = require('./routes');
-require('newrelic');
+// require('newrelic');
 
 const port = process.env.PORT || 4000;
 
