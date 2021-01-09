@@ -1,9 +1,11 @@
+/* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 // const db = require('../db/index');
 const pgdb = require('../db/pg/index');
-const { client } = require('../server/redis');
+// const { client } = require('../server/redis');
 
+/*
 const cache = (req, res, next) => {
   const { id } = req.params;
 
@@ -19,6 +21,7 @@ const cache = (req, res, next) => {
     next();
   });
 };
+*/
 
 const allComments = async (req, res) => {
   try {
@@ -44,7 +47,7 @@ const findSong = async (req, res) => {
     let comment;
     if (Number.isInteger(Number(id))) {
       comment = await pgdb.getComment(id);
-      client.setex(id, 3600, JSON.stringify(comment));
+      // client.setex(id, 3600, JSON.stringify(comment));
     }
 
     if (!comment) {
@@ -156,7 +159,7 @@ const updateComment = async (req, res) => {
       req.body.content,
     );
 
-    client.del(req.params.id);
+    // client.del(req.params.id);
 
     if (updatedComment === 0) {
       return res.status(400).send('Bad request');
@@ -195,7 +198,7 @@ const deleteComment = async (req, res) => {
 };
 
 module.exports = {
-  cache,
+  // cache,
   allComments,
   findSong,
   findComment,

@@ -32,7 +32,7 @@ exports.config = {
      *
      * @env NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
      */
-    enabled: true
+    enabled: true,
   },
   logging: {
     /**
@@ -67,7 +67,7 @@ exports.config = {
       'response.headers.authorization',
       'response.headers.proxyAuthorization',
       'response.headers.setCookie*',
-      'response.headers.x*'
-    ]
-  }
+      'response.headers.x*',
+    ],
+  },
 }
