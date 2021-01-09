@@ -111,11 +111,12 @@ const findComment = async (req, res) => {
 };
 
 const addComment = async (req, res) => {
-  // console.log(
-  //   req.body,
-  //   req.query,
-  //   req.param,
-  // );
+  console.log(
+    req.body,
+    req.query,
+    req.param,
+    process.env.POSTGRES_HOST,
+  );
   try {
     let comment_id;
     if (req.query.id) {
@@ -155,7 +156,7 @@ const updateComment = async (req, res) => {
       req.body.content,
     );
 
-    // client.del(req.params.id);
+    client.del(req.params.id);
 
     if (updatedComment === 0) {
       return res.status(400).send('Bad request');

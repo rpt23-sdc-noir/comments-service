@@ -7,14 +7,14 @@ const errorRate = new Rate('errors');
 
 export const options = {
   stages: [
-    { duration: '30s', target: 3000 }, // below normal load
+    { duration: '3s', target: 3000 }, // below normal load
     { duration: '1m', target: 3000 },
-    { duration: '10s', target: 3500 }, // normal load
-    { duration: '1m', target: 3500 },
-    { duration: '10s', target: 4000 }, // around the breaking point
-    { duration: '1m', target: 4000 },
-    { duration: '10s', target: 4500 }, // beyond the breaking point
-    { duration: '1m', target: 4500 },
+    { duration: '10s', target: 3000 }, // normal load
+    { duration: '1m', target: 3000 },
+    { duration: '10s', target: 3000 }, // around the breaking point
+    { duration: '1m', target: 3000 },
+    { duration: '10s', target: 3000 }, // beyond the breaking point
+    { duration: '1m', target: 3000 },
     { duration: '30s', target: 0 }, // scale down. Recovery stage.
   ],
   thresholds: {

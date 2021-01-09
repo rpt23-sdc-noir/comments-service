@@ -1,3 +1,7 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable strict */
+/* eslint-disable lines-around-directive */
+/* eslint-disable semi */
 'use strict'
 /**
  * New Relic agent configuration.
@@ -36,7 +40,7 @@ exports.config = {
      * issues with the agent, 'info' and higher will impose the least overhead on
      * production applications.
      */
-    level: 'info'
+    level: 'info',
   },
   /**
    * When true, all request headers except for those listed in attributes.exclude
